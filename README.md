@@ -33,9 +33,3 @@ More info about dataset can be found here:
 
 ## Data Model
 <img src="https://github.com/SatishBirhade/uber-etl-pipeline-data-engineering-project/blob/5680c7aafa6c8ea15f022df6d18436f2ef3a7a53/Model_Structure/data_model%20structure%20(facts%20and%20dimension%20table).jpeg">
-
-## Data Model
-<img src="data_model.jpeg">
-
-## Complete Video Tutorial 
-Video Link - https://youtu.be/WpQECq5Hx9g
