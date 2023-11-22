@@ -1,0 +1,66 @@
+1) Average fare amount by each vendor
+>>   SELECT VendorID, avg(fare_amount) FROM `uber_data_engg_satish.fact_table` 
+     GROUP BY VendorID;
+
+2) Average tip amount based on payment type
+>>   SELECT payment_type_name, avg(tip_amount) FROM `uber_data_engg_satish.fact_table` a
+     JOIN `uber_data_engg_satish.payment_type_dim` b
+     ON a.payment_type_id=b.payment_type_id
+     GROUP BY payment_type_name;
+
+3) top 10 pickup locations based on number of trips
+>>   SELECT pickup_latitude,pickup_longitude, COUNT(trip_id) as No_of_Trips
+     FROM `uber_data_engg_satish.fact_table` a
+     JOIN `uber_data_engg_satish.pickup_location_dim` b
+     ON a.pickup_location_id=b.pickup_location_id
+     GROUP BY pickup_latitude,pickup_longitude
+     ORDER BY No_of_Trips DESC
+     LIMIT 10;
+
+4) total number of trips by passenger count
+>>   SELECT passenger_count, COUNT(passenger_count_id) AS No_of_Trips
+     FROM `uber_data_engg_satish.passenger_count_dim`
+     GROUP BY passenger_count;
+
+5) Average fare amount by hour of the day
+>>   SELECT a.pick_hour, AVG(b.fare_amount) AS Avg_Fare_Amt 
+     FROM `uber_data_engg_satish.datetime_dim` a
+     JOIN `uber_data_engg_satish.fact_table` b
+     ON a.datetime_id=b.datetime_id
+     GROUP BY a.pick_hour
+     ORDER BY AVG(b.fare_amount) DESC;
+
+
+*************************CREATE FLAT TABLE **************************
+
+CREATE OR REPLACE TABLE `uber-data-analytics-405818.uber_data_engg_satish.tbl_analytics` AS (
+SELECT 
+f.trip_id,
+f.VendorID,
+d.tpep_pickup_datetime,
+d.tpep_dropoff_datetime,
+p.passenger_count,
+t.trip_distance,
+r.rate_code_name,
+pick.pickup_latitude,
+pick.pickup_longitude,
+dro.dropoff_latitude,
+dro.dropoff_longitude,
+pay.payment_type_name,
+f.fare_amount,
+f.extra,
+f.mta_tax,
+f.tip_amount,
+f.tolls_amount,
+f.improvement_surcharge,
+f.total_amount
+FROM 
+`uber_data_engg_satish.fact_table` f
+JOIN `uber_data_engg_satish.datetime_dim` d  ON f.datetime_id=d.datetime_id
+JOIN `uber_data_engg_satish.passenger_count_dim` p  ON p.passenger_count_id=f.passenger_count_id  
+JOIN `uber_data_engg_satish.trip_distance_dim` t  ON t.trip_distance_id=f.trip_distance_id  
+JOIN `uber_data_engg_satish.rate_code_dim` r ON r.rate_code_id=f.rate_code_id  
+JOIN `uber_data_engg_satish.pickup_location_dim` pick ON pick.pickup_location_id=f.pickup_location_id
+JOIN `uber_data_engg_satish.dropoff_location_dim` dro ON dro.dropoff_location_id=f.dropoff_location_id
+JOIN `uber_data_engg_satish.payment_type_dim` pay ON pay.payment_type_id=f.payment_type_id)
+;
