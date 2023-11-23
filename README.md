@@ -69,7 +69,9 @@ More info about dataset can be found here:
 2. Use Looker to generate reports, connecting to BigQuery and adding the `table_analysis` table.
 3. Create visualizations and reports using various charts and controls
 
-### Final Dashboard Link: Uber_Data_Analytics_Dashboard.pdf
+### Final Dashboard Link: https://github.com/SatishBirhade/uber-etl-pipeline-data-engineering-project/blob/c8030b4167c082e95d1c9facf9c0976a2a0d7129/Uber_Data_Analytics_Dashboard.pdf
+
+This project aims to provide insights into Uber data through comprehensive data analytics. For a detailed explanation of each step and further project updates, please refer to the GitHub repository.
 
 
 
